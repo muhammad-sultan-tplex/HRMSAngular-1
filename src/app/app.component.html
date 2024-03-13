@@ -1,3 +1,33 @@
-<app-navbar></app-navbar>
+<mat-toolbar>
+    <button mat-icon-button (click)="drawer.toggle()"><mat-icon>menu</mat-icon></button>
+    <span>Hello Sultan</span>
+    <span class="example-spacer"></span>
+    <button mat-button [matMenuTriggerFor]="menu">
+        <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <a mat-menu-item color="primary" routerLink="profile">Profile</a>
+        <a mat-menu-item color="primary" routerLink="logout">Logout</a>
+    </mat-menu>
+</mat-toolbar>
 
-<router-outlet></router-outlet>
+<mat-drawer-container autosize>
+    <mat-drawer #drawer mode="side">
+        <mat-list>
+            <mat-list-item>
+                <a mat-button color="primary" routerLink="dashboard">Dashboard</a>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+                <a mat-button color="primary" routerLink="users">Users</a>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+                <a mat-button color="primary" routerLink="roles">Roles</a>
+            </mat-list-item>
+        </mat-list>
+    </mat-drawer>
+    <mat-drawer-content>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>

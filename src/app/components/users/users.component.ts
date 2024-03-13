@@ -1,33 +1,55 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { UserDto } from '../../dtos/UserDto';
 import { UserService } from '../../services/user-service';
-import { PagedResultDto } from 'src/app/dtos/PagedResultDto';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+
 declare var window: any;
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.css']  
 })
 export class UsersComponent {
-  title = 'UserModel.UI';
+  title = 'HRMS';
   users: UserDto[] = [];
   userToEdit? : UserDto;
   formModal: any;
 
-  constructor(private userService : UserService) {}
+  displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
+  dataSource: MatTableDataSource<UserDto>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+  constructor(private userService : UserService) {
+    // Assign the data to the data source for the table to render
+    this.dataSource = new MatTableDataSource(this.users);
+  }
 
   ngOnInit() : void {
      this.userService
      .getUsers()
      .subscribe(result => {
-      this.users = result.items
+      this.users = result.items;
      });
-
-     this.formModal = new window.bootstrap.Modal(
-      document.getElementById("myModal")
-     );
   }  
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 
   openModal(){
     this.formModal.show();

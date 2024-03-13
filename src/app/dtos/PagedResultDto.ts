@@ -1,5 +1,3 @@
-import { UserDto } from "../dtos/UserDto";
-
 export class PagedResultDto<T>{
     items: T[] = [];
     totalCount?: number;
