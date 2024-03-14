@@ -10,7 +10,8 @@ declare var window: any;
 
 
 export class AppComponent implements OnInit{
-  title = 'UserModel.UI';
+  title = 'HRMS';
+  opened = false;
   formModal: any;
 
   constructor(private userService : UserService) {}

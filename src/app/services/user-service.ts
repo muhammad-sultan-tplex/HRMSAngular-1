@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environments';
 import { PagedResultDto } from '../dtos/PagedResultDto';
+import { ResponseModel } from '../dtos/ResponseModel';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,8 @@ export class UserService {
       );
   }
 
-  public updateUser(user: UserDto) : Observable<PagedResultDto<UserDto>> {
-    return this.http.put<PagedResultDto<UserDto>>(`${environment.apiUrl}/${this.url}`, user);
+  public updateUser(user: UserDto) : Observable<ResponseModel> {
+    return this.http.put<ResponseModel>(`${environment.apiUrl}/${this.url}`, user);
   }
 
   public createUser(user: UserDto) : Observable<UserDto[]> {

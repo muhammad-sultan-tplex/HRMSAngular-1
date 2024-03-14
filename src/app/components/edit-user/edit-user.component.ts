@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PagedResultDto } from 'src/app/dtos/PagedResultDto';
+import { ResponseModel } from 'src/app/dtos/ResponseModel';
 import { UserDto } from 'src/app/dtos/UserDto';
 import { UserService } from 'src/app/services/user-service';
 
@@ -21,7 +22,9 @@ export class EditUserComponent implements OnInit{
   updateUser(user: UserDto) {
     this.userService
     .updateUser(user)
-    .subscribe((users: PagedResultDto<UserDto>) => this.usersUpdated.emit(users.items));
+    .subscribe((users: ResponseModel) => {
+      
+    });
   }
 
   deleteUser(user: UserDto) {
